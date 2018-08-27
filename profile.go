@@ -126,6 +126,25 @@ Make sure to backup your data frequently.`,
 			return nil
 		},
 	},
+	"postgresds": {
+		Description: `Replaces default datastore configuration with experimental
+postgres datastore.
+
+WARNING: postgres datastore is experimental.
+Make sure to backup your data frequently.`,
+		Transform: func(c *Config) error {
+			c.Datastore.Spec = map[string]interface{}{
+				"type":   "measure",
+				"prefix": "postgres.datastore",
+				"child": map[string]interface{}{
+					"type":       "postgres",
+					"path":       "postgres",
+					"syncWrites": true,
+				},
+			}
+			return nil
+		},
+	},
 	"default-datastore": {
 		Description: `Restores default datastore configuration.
 
