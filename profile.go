@@ -139,7 +139,6 @@ Make sure to backup your data frequently.`,
 				"child": map[string]interface{}{
 					"type":       "postgres",
 					"path":       "postgres",
-					"syncWrites": true,
 				},
 			}
 			return nil
