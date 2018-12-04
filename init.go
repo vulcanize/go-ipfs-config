@@ -64,8 +64,9 @@ func Init(out io.Writer, nBitsForKeypair int) (*Config, error) {
 			HTTPHeaders: map[string][]string{
 				"Access-Control-Allow-Origin":  []string{"*"},
 				"Access-Control-Allow-Methods": []string{"GET"},
-				"Access-Control-Allow-Headers": []string{"X-Requested-With", "Range"},
+				"Access-Control-Allow-Headers": []string{"X-Requested-With", "Range", "User-Agent"},
 			},
+			APICommands: []string{},
 		},
 		Reprovider: Reprovider{
 			Interval: "12h",
@@ -105,8 +106,8 @@ func addressesConfig() Addresses {
 		},
 		Announce:   []string{},
 		NoAnnounce: []string{},
-		API:        "/ip4/127.0.0.1/tcp/5001",
-		Gateway:    "/ip4/127.0.0.1/tcp/8080",
+		API:        Strings{"/ip4/127.0.0.1/tcp/5001"},
+		Gateway:    Strings{"/ip4/127.0.0.1/tcp/8080"},
 	}
 }
 
