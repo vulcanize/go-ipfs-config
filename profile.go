@@ -3,6 +3,7 @@ package config
 import (
 	"fmt"
 	"net"
+	"os"
 	"time"
 )
 
@@ -211,9 +212,13 @@ Make sure to backup your data frequently.`,
 				"type":   "measure",
 				"prefix": "postgres.datastore",
 				"child": map[string]interface{}{
-					"type":       "postgres",
-					"path":       "postgres",
-					"syncWrites": true,
+					"type":     "postgres",
+					"host":     os.Getenv("IPFS_PGHOST"),
+					"user":     os.Getenv("IPFS_PGUSER"),
+					"passfile": os.Getenv("IPFS_PGPASSFILE"),
+					"password": os.Getenv("IPFS_PGPASSWORD"),
+					"dbname":   os.Getenv("IPFS_PGDATABASE"),
+					"port":     os.Getenv("IPFS_PGPORT"),
 				},
 			}
 			return nil
