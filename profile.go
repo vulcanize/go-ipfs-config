@@ -201,6 +201,20 @@ fetching may be degraded.
 			return nil
 		},
 	},
+	"postgresds": {
+		Description: `Replaces default datastore configuration with experimental
+postgres datastore.
+WARNING: postgres datastore is experimental.
+Make sure to backup your data frequently.
+
+This profile may only be applied when first initializing the node.
+`,
+		InitOnly: true,
+		Transform: func(c *Config) error {
+			c.Datastore.Spec = postgresSpec()
+			return nil
+		},
+	},
 }
 
 func getAvailablePort() (port int, err error) {

@@ -5,6 +5,7 @@ import (
 	"encoding/base64"
 	"fmt"
 	"io"
+	"os"
 	"time"
 
 	"github.com/ipfs/interface-go-ipfs-core/options"
@@ -170,6 +171,24 @@ func flatfsSpec() map[string]interface{} {
 					"compression": "none",
 				},
 			},
+		},
+	}
+}
+
+func postgresSpec() map[string]interface{} {
+	return map[string]interface{}{
+		"type":   "measure",
+		"prefix": "postgres.datastore",
+		"child": map[string]interface{}{
+			"type":       "postgres",
+			"path":       "postgres",
+			"host":       os.Getenv("IPFS_PGHOST"),
+			"user":       os.Getenv("IPFS_PGUSER"),
+			"passfile":   os.Getenv("IPFS_PGPASSFILE"),
+			"password":   os.Getenv("IPFS_PGPASSWORD"),
+			"dbname":     os.Getenv("IPFS_PGDATABASE"),
+			"port":       os.Getenv("IPFS_PGPORT"),
+			"syncWrites": true,
 		},
 	}
 }
