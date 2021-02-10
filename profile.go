@@ -3,7 +3,6 @@ package config
 import (
 	"fmt"
 	"net"
-	"os"
 	"time"
 )
 
@@ -163,7 +162,8 @@ when adding many gigabytes of files, is critical. However:
   flatfs.
 * This datastore uses up to several gigabytes of memory. 
 
-This profile may only be applied when first initializing the node.`,
+This profile may only be applied when first initializing the node.
+`,
 
 		InitOnly: true,
 		Transform: func(c *Config) error {
@@ -206,21 +206,14 @@ fetching may be degraded.
 		Description: `Replaces default datastore configuration with experimental
 postgres datastore.
 WARNING: postgres datastore is experimental.
-Make sure to backup your data frequently.`,
+Make sure to backup your data frequently.
+
+This profile may only be applied when first initializing the node.
+`,
+
+		InitOnly: true,
 		Transform: func(c *Config) error {
-			c.Datastore.Spec = map[string]interface{}{
-				"type":   "measure",
-				"prefix": "postgres.datastore",
-				"child": map[string]interface{}{
-					"type":     "postgres",
-					"host":     os.Getenv("IPFS_PGHOST"),
-					"user":     os.Getenv("IPFS_PGUSER"),
-					"passfile": os.Getenv("IPFS_PGPASSFILE"),
-					"password": os.Getenv("IPFS_PGPASSWORD"),
-					"dbname":   os.Getenv("IPFS_PGDATABASE"),
-					"port":     os.Getenv("IPFS_PGPORT"),
-				},
-			}
+			c.Datastore.Spec = postgresSpec()
 			return nil
 		},
 	},
